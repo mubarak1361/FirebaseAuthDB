@@ -17,6 +17,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def seprater = "_"
+            def appName = "FirebaseAuth"
+            //def flavor = variant.productFlavors[0].name
+            def buildType = variant.variantData.variantConfiguration.buildType.name
+            def formattedDate = new Date().format('yyyy_MMM_dd') //HHmmss
+            def newName = appName + seprater + formattedDate + seprater /*+ flavor*/
+            if(buildType.contains("release")){
+                newName = newName  + "_signed"
+            }
+            newName = newName + ".apk"
+            output.outputFile = new File(output.outputFile.parent, newName)
+        }
+
+    }
 }
 
 def supportVersion = "24.1.1"
