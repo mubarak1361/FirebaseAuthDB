@@ -21,7 +21,6 @@ public class ObservableActivity extends AppCompatActivity implements Observer {
         employee.setFirstName("Adam");
         employee.setLastName("Mohideen");
         employee.addObserver(this);
-
         employee.setFirstName("Mubarak");
     }
 
