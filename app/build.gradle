@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+import groovyx.net.http.ContentType
+import groovyx.net.http.RESTClient
+
 
 android {
     compileSdkVersion 24
@@ -17,23 +20,41 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def seprater = "_"
-            def appName = "FirebaseAuth"
-            //def flavor = variant.productFlavors[0].name
-            def buildType = variant.variantData.variantConfiguration.buildType.name
-            def formattedDate = new Date().format('yyyy_MMM_dd') //HHmmss
-            def newName = appName + seprater + formattedDate + seprater /*+ flavor*/
-            if(buildType.contains("release")){
-                newName = newName  + "_signed"
+         applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def seprater = "_"
+                def appName = "FirebaseAuth"
+                //def flavor = variant.productFlavors[0].name
+                def buildType = variant.variantData.variantConfiguration.buildType.name
+                def formattedDate = new Date().format('yyyy_MMM_dd') //HHmmss
+                def newName = appName + seprater + formattedDate + seprater
+                if(buildType.contains("release")){
+                    newName = newName  + "_signed"
+                }
+                newName = newName + ".apk"
+                output.outputFile = new File(output.outputFile.parent, newName)
             }
-            newName = newName + ".apk"
-            output.outputFile = new File(output.outputFile.parent, newName)
-        }
 
     }
 }
+
+task pushDropbox << {
+
+    def outName = "app-debug.apk"
+    def formattedDate = new Date().format('yyyy_MMM_dd')
+    def formattedTime = new Date().format('hh_mm_aa')
+    def artifact = new File("$buildDir/outputs/apk/*$formattedDate*.apk")
+    def client = new RESTClient('https://content.dropboxapi.com')
+    def response = client.post(
+            path : "/1/files_put/auto/Colan/$rootProject.name/$formattedDate/$formattedTime/${outName}",
+            body : artifact.bytes,
+            query: [overwrite: true, autorename: false],
+            headers: ['Authorization': 'Bearer RhYynnWI2iMAAAAAAAAAoV9CH7qer2C3A1H70y4hGr8rBjC9cE72F8vPm22_xW47'],
+            requestContentType: ContentType.BINARY)
+
+    assert response.status == 200
+}
+pushDropbox.dependsOn 'clean','assembleDebug'
 
 def supportVersion = "24.1.1"
 def firebaseVersion = "9.4.0"
