@@ -1,3 +1,6 @@
+dependencies:
+  override:
+     - chmod +x gradlew
 test:
   override:
     # start the emulator
@@ -7,7 +10,6 @@ test:
     # wait for it to have booted
     - circle-android wait-for-boot
     # run tests  against the emulator.
-    - chmod +x gradlew
     - ./gradlew assembleDebug
     # copy the build outputs to artifacts
     - cp -r FirebaseSample/build/outputs $CIRCLE_ARTIFACTS
