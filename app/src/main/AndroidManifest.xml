@@ -12,9 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AuthActivity"
-            android:label="@string/authenticate">
-
-        </activity>
+            android:label="@string/authenticate"></activity>
         <activity
             android:name=".PostsActivity"
             android:label="@string/posts" />
@@ -28,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MultiDragActivity"></activity>
     </application>
 
 </manifest>
