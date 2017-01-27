@@ -8,8 +8,8 @@ test:
         background: true
         parallel: true
     # wait for it to have booted
-    - circle-android wait-for-boot
+    #- circle-android wait-for-boot
     # run tests  against the emulator.
     - ./gradlew assembleDebug
     # copy the build outputs to artifacts
-    - cp -r FirebaseSample/build/outputs $CIRCLE_ARTIFACTS
+    - cp -r FirebaseAuthDB/build/outputs $CIRCLE_ARTIFACTS
