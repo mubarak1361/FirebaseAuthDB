@@ -1,17 +1,17 @@
+general:
+    artifacts:
+      - /home/ubuntu/FirebaseAuthDB/app/build/outputs/
+
 dependencies:
   override:
      - chmod +x gradlew
 
-general:
-    artifacts:
-      -/home/ubuntu/FirebaseAuthDB/app/build/outputs/
-
 test:
   override:
     # start the emulator
-    - emulator -avd circleci-android24 -no-window:
-        background: true
-        parallel: true
+    #- emulator -avd circleci-android24 -no-window:
+        #background: true
+        #parallel: true
     # wait for it to have booted
     #- circle-android wait-for-boot
     # run tests  against the emulator.
