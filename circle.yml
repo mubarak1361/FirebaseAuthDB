@@ -12,4 +12,4 @@ test:
     # run tests  against the emulator.
     - ./gradlew assembleDebug
     # copy the build outputs to artifacts
-    - cp -r FirebaseAuthDB/build/outputs $CIRCLE_ARTIFACTS
+    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
