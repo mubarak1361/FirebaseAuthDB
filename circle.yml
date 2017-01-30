@@ -1,6 +1,6 @@
 general:
     artifacts:
-      - /home/ubuntu/FirebaseAuthDB/app/build/outputs/
+      - /app/build/outputs/
 
 dependencies:
   override:
@@ -8,11 +8,4 @@ dependencies:
 
 test:
   override:
-    # start the emulator
-    #- emulator -avd circleci-android24 -no-window:
-        #background: true
-        #parallel: true
-    # wait for it to have booted
-    #- circle-android wait-for-boot
-    # run tests  against the emulator.
     - ./gradlew assembleDebug
